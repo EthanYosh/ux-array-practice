@@ -167,35 +167,24 @@ function getIndexOfItem(fridge, item) {
 
 function getItemFromNewFridge(fridge, item) {
 
-    let answer = "null";
+    let answer;
     let lengthy = fridge.length;
-    
 
-    for (let i=0; i>lengthy-1; i++) {
+    for (let i=0; i<lengthy; i++) {
 
         let tempThing = fridge[i];
-
         if (tempThing.includes(item)) {
-            fridge = fridge.splice(i, 1, tempThing);
-            answer = item;
-        }
-
-        if (tempThing.length < 1 || tempThing === undefined || tempThing === null) {
-            fridge = fridge.filter(e => e.length);
+            let answer = tempThing.splice(-1,1)
+            if(tempThing.length < 1){
+                fridge.splice(fridge.indexOf(tempThing),1)
+            }
+            return answer
         }
     }
-
     return answer;
 }
 
 
-let newFridge = [["egg", "egg", "egg", "egg"], ["butter"], ["milk"], ["cheese", "cheese"]];
-console.log("* Get the last milk");
-let lengthBeforeGettingLastMilk = newFridge.length;
-let milkArrayLengthBeforeGettingLastMilk = newFridge[2].length;
-let lastMilk = getItemFromNewFridge(newFridge, "milk");
-console.log(lastMilk);
-console.log(lastMilk == "milk" && newFridge.length == lengthBeforeGettingLastMilk - 1 && getIndexOfItem(newFridge, "milk") == -1);
 
 /*
     putItemInNewFridge
@@ -204,36 +193,33 @@ console.log(lastMilk == "milk" && newFridge.length == lengthBeforeGettingLastMil
     Otherwise, create a new array in the fridge and put this item in it.
 */
 function putItemInNewFridge(fridge, item) {
+
     let match = 0;
+    let lengthy = fridge.length;
 
-    for (let i in fridge) {
+    for (let i=0; i<lengthy; i++) {
+        let boomArray = fridge[i];
 
-        if (fridge[i].includes(item)) {
-            match = 576876;
-            let newArray = [fridge[i]];
-            newArray.push(item);
-            almostFridge = fridge.splice(i, 1, newArray);
-            lastFridge = item;
+        if (boomArray.includes(item)) {
+            match = 1;
+            boomArray.push(item);
+            let almostFridge = fridge.splice(i, 1, boomArray);
+            let lastFridge = almostFridge;
+            return lastFridge;
         }
     }
 
-
-
-    if (match === 0) {
-
+    if (match ==! 1) {
         let litArray = [];
         litArray.push(item);
-        beforeResult = fridge.push(litArray);
-        lastFridge = beforeResult;
+        let beforeResult = fridge.push(litArray);
+        let lastFridge = beforeResult;
+        return lastFridge;
+
 
     }
-    
-
-    return lastFridge;
 }
 
-
-let newFridge = [["egg", "egg", "egg", "egg"], ["butter"], ["milk"], ["cheese", "cheese"]];
 
 /*
    -------END OF YOUR CODE-----------------------------------------------------------
@@ -246,6 +232,7 @@ let newFridge = [["egg", "egg", "egg", "egg"], ["butter"], ["milk"], ["cheese", 
 
 console.log("-----Tests for Exercise Four - getItemFromNewFridge-----");
 console.log("* Get a cheese");
+let newFridge = [["egg", "egg", "egg", "egg"], ["butter"], ["milk"], ["cheese", "cheese"]];
 let lengthBeforeGettingCheese = newFridge.length;
 let cheeseArrayLengthBeforeGettingCheese = newFridge[3].length;
 let cheese = getItemFromNewFridge(newFridge, "cheese");
